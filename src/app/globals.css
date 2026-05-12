@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surface */
+  --bg: #0a0d12;
+  --bg-elev: #13171f;
+  --bg-card: #181d27;
+  --hairline: rgba(241, 235, 224, 0.08);
+  --hairline-strong: rgba(241, 235, 224, 0.18);
+
+  /* Text */
+  --ink: #f1ebe0;
+  --ink-muted: rgba(241, 235, 224, 0.62);
+  --ink-soft: rgba(241, 235, 224, 0.42);
+
+  /* Accents — two, tied to meaning */
+  --warm: #e8b88a;    /* elicitation, human, soft */
+  --warm-bright: #f0c79b;
+  --cool: #7ec7d1;    /* evidence, atlas, verdict */
+  --cool-bright: #9bd6dd;
+
+  /* Semantic verdict colors */
+  --verdict-well-studied: var(--cool);
+  --verdict-partially: rgba(126, 199, 209, 0.65);
+  --verdict-untested: rgba(241, 235, 224, 0.40);
+  --verdict-failed: #d68a8a;
+
+  /* Folklore-risk gradient */
+  --risk-high: #d68a8a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-bg-elev: var(--bg-elev);
+  --color-bg-card: var(--bg-card);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-soft: var(--ink-soft);
+  --color-warm: var(--warm);
+  --color-warm-bright: var(--warm-bright);
+  --color-cool: var(--cool);
+  --color-cool-bright: var(--cool-bright);
+  --color-risk-high: var(--risk-high);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-newsreader);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-feature-settings: "cv11" on, "ss01" on;
+  letter-spacing: -0.005em;
+}
+
+::selection {
+  background: var(--warm);
+  color: var(--bg);
+}
+
+/* Marginalia — small caps numerals + serif emphasis */
+.marginalia {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-style: italic;
+  font-variant-numeric: oldstyle-nums;
+  color: var(--ink-soft);
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+}
+
+.roman {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-feature-settings: "smcp" on;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.editorial {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-feature-settings: "liga" on, "dlig" on;
+}
+
+/* Hairline border utility */
+.hairline {
+  border: 1px solid var(--hairline);
+}
+.hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
+/* Subtle inset for cards */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+}
+.card-hover:hover {
+  border-color: var(--hairline-strong);
+  background: var(--bg-card);
+}
+
+/* Accent verdict pills */
+.pill {
+  font-size: 0.70rem;
+  letter-spacing: 0.06em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  display: inline-block;
+}
+
+/* Input styling */
+input[type="text"], textarea {
+  background: var(--bg);
+  border: 1px solid var(--hairline-strong);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  border-color: var(--warm);
+}
+
+/* Chat bubble styling */
+.bubble-operator {
+  background: rgba(232, 184, 138, 0.08);
+  border: 1px solid rgba(232, 184, 138, 0.20);
+}
+.bubble-persona {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline);
+}
+
+/* Button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.005em;
+  transition: all 100ms;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--warm);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--warm-bright);
+}
+.btn-primary:disabled {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hairline-strong);
+}
+.btn-ghost:hover {
+  border-color: var(--warm);
+  color: var(--warm);
+}
+
+/* Smooth scrolling for chat */
+.scroll-smooth-y {
+  scroll-behavior: smooth;
 }
