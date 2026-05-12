@@ -33,9 +33,12 @@ npm run dev
 ## Deploy
 
 ```bash
-vercel
-# Set ANTHROPIC_API_KEY in Project Settings → Environment Variables
+./deploy.sh
 ```
+
+The helper handles CLI install / auth check / project link / `ANTHROPIC_API_KEY` env / production deploy. Idempotent — safe to re-run.
+
+Manual path if you prefer (or want the GitHub-integration auto-deploy flow): https://vercel.com/new → import `Moranetz/closer-sparring` → add `ANTHROPIC_API_KEY` under Environment Variables → Deploy.
 
 ## How the persona schema works
 
